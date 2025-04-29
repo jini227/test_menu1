@@ -2,29 +2,35 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>메뉴 추천 테스트</title>
+    <title>감성 점메추 테스트</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <div id="start-screen">
-    <h1>메뉴 추천 테스트</h1>
-    <button onclick="startTest()">시작하기</button>
+    <h1>오늘 뭐 먹지?</h1>
+    <p>오늘의 메뉴를 찾아드릴게요!</p>
+    <div class="button-group">
+        <button id="startBtn" onclick="startTest()">시작하기</button>
+    </div>
 </div>
 
 <div id="quiz" style="display:none;">
     <h2 id="questionText"></h2>
     <div class="button-group">
-        <button onclick="selectAnswer(0)"></button>
-        <button onclick="selectAnswer(1)"></button>
+        <button id="answerBtn0" onclick="selectAnswer(0)"></button>
+        <button id="answerBtn1" onclick="selectAnswer(1)"></button>
     </div>
 </div>
 
 <div id="result" style="display:none;">
-    <h2>당신을 위한 메뉴는?</h2>
+    <h2>추천 메뉴</h2>
     <div id="menuResult"></div>
     <img id="menuImage" style="max-width:300px; display:none;" alt="음식 이미지">
+    <p>오늘은 이걸로 행복한 한 끼 어떠세요?</p>
     <div class="button-group">
-        <button id="anotherBtn" onclick="showAnotherMenu()">다른거 !!</button>
+        <button onclick="showAnotherMenu()">다른 메뉴 추천</button>
         <button id="restartBtn" onclick="restartTest()">처음으로</button>
     </div>
 </div>

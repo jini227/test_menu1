@@ -78,9 +78,8 @@ let finalType = "";
 function loadQuestion() {
     const q = questions[currentQuestion];
     document.getElementById('questionText').innerText = q.q;
-    const buttons = document.querySelectorAll('.button-group button');
-    buttons[0].innerText = q.answers[0].text;
-    buttons[1].innerText = q.answers[1].text;
+    document.getElementById('answerBtn0').innerText = q.answers[0].text;
+    document.getElementById('answerBtn1').innerText = q.answers[1].text;
 }
 
 function selectAnswer(index) {
@@ -108,7 +107,7 @@ function showResult() {
 function showMenu() {
     const menuList = menuOptions[finalType];
     const randomMenu = menuList[Math.floor(Math.random() * menuList.length)];
-    document.getElementById('menuResult').innerText = randomMenu;
+    document.getElementById('menuResult').innerText = '🍽️' + randomMenu + '🍽️';
 
     // 이미지 보여주기
     const imageName = menuImageMap[randomMenu];  // 이미지 파일명 (예: A_1)
