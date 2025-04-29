@@ -272,13 +272,18 @@ function showResult() {
     const bestMenu = calculateMenu();
     document.getElementById('menuResult').innerText = '🍽️ ' + bestMenu + ' 🍽️';
 
-    // 메뉴 이미지 설정
     const imageName = menuImageMap[bestMenu];
     const category = menuConditions[bestMenu].category;
     const imageElement = document.getElementById('menuImage');
+    imageElement.crossOrigin = "anonymous";
     const imageUrl = imageName ? `images/${category}/${imageName}.png` : null;
 
     if (imageUrl) {
+        imageElement.onload = function () {
+            getBackgroundColor(imageElement, function (color) {
+                document.getElementById('result').style.backgroundColor = color;
+            });
+        };
         imageElement.src = imageUrl;
         imageElement.style.display = 'block';
     } else {
@@ -297,9 +302,15 @@ function showAnotherMenu() {
 
     const imageName = menuImageMap[randomMenu];
     const imageElement = document.getElementById('menuImage');
+    imageElement.crossOrigin = "anonymous";
     const imageUrl = imageName ? `images/${category}/${imageName}.png` : null;
 
     if (imageUrl) {
+        imageElement.onload = function () {
+            getBackgroundColor(imageElement, function (color) {
+                document.getElementById('result').style.backgroundColor = color;
+            });
+        };
         imageElement.src = imageUrl;
         imageElement.style.display = 'block';
     } else {
@@ -312,6 +323,7 @@ function restartTest() {
     userPreference = {};
     document.getElementById('result').style.display = 'none';
     document.getElementById('quiz').style.display = 'block';
+    document.getElementById('result').style.backgroundColor = '#ffffff';
     loadQuestion();
 }
 
@@ -320,5 +332,47 @@ function startTest() {
     document.getElementById('quiz').style.display = 'block';
     loadQuestion();
 }
+
+function getBackgroundColor(image, callback) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    ctx.drawImage(image, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    const colorCount = {};
+    let maxCount = 0;
+    let backgroundColor = 'rgb(255, 255, 255)'; // fallback
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const margin = 20; // 주변부 두께 (픽셀 수)
+
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            if (x < margin || x > width - margin || y < margin || y > height - margin) {
+                const index = (y * width + x) * 4;
+                const r = data[index];
+                const g = data[index + 1];
+                const b = data[index + 2];
+                const color = `${r},${g},${b}`;
+
+                colorCount[color] = (colorCount[color] || 0) + 1;
+
+                if (colorCount[color] > maxCount) {
+                    maxCount = colorCount[color];
+                    backgroundColor = `rgb(${color})`;
+                }
+            }
+        }
+    }
+
+    callback(backgroundColor);
+}
+
 
 window.onload = loadQuestion;
