@@ -60,7 +60,7 @@ const menuConditions = {
     "파스타": { spicy: false, soup: false, meat: false, noodle: true, full: true, easy: false, special: false, sweet: false, seafood: false, vegetarian: true, healthy: false, quick: false, category: "F" },
     "비빔국수": { spicy: true, soup: false, meat: false, noodle: true, full: true, easy: true, special: false, sweet: false, seafood: false, vegetarian: true, healthy: false, quick: true, category: "F" },
     "짜장면": { spicy: false, soup: false, meat: false, noodle: true, full: true, easy: true, special: false, sweet: false, seafood: false, vegetarian: false, healthy: false, quick: true, category: "F" },
-    "볶음밥": { spicy: true, soup: false, meat: false, noodle: false, full: true, easy: true, special: false, sweet: false, seafood: false, vegetarian: false, healthy: false, quick: true, category: "F" },
+    "카레": { spicy: true, soup: false, meat: false, noodle: false, full: true, easy: true, special: false, sweet: false, seafood: false, vegetarian: false, healthy: false, quick: true, category: "F" },
     "해물파전": { spicy: false, soup: false, meat: false, noodle: false, full: true, easy: true, special: true, sweet: false, seafood: true, vegetarian: false, healthy: false, quick: true, category: "F" },
     "장어덮밥": { spicy: false, soup: false, meat: true, noodle: false, full: true, easy: true, special: true, sweet: false, seafood: true, vegetarian: false, healthy: false, quick: true, category: "F" },
     "회덮밥": { spicy: false, soup: false, meat: true, noodle: false, full: true, easy: true, special: true, sweet: false, seafood: true, vegetarian: false, healthy: true, quick: true, category: "F" },
@@ -274,9 +274,9 @@ function showResult() {
 
     // 메뉴 이미지 설정
     const imageName = menuImageMap[bestMenu];
-    const imageCategory = menuConditions[bestMenu].category;
+    const category = menuConditions[bestMenu].category;
     const imageElement = document.getElementById('menuImage');
-    const imageUrl = imageName ? `images/${imageCategory}/${imageName}.png` : null;
+    const imageUrl = imageName ? `images/${category}/${imageName}.png` : null;
 
     if (imageUrl) {
         imageElement.src = imageUrl;
@@ -297,7 +297,7 @@ function showAnotherMenu() {
 
     const imageName = menuImageMap[randomMenu];
     const imageElement = document.getElementById('menuImage');
-    const imageUrl = imageName ? `images/${imageName}.png` : null;
+    const imageUrl = imageName ? `images/${category}/${imageName}.png` : null;
 
     if (imageUrl) {
         imageElement.src = imageUrl;

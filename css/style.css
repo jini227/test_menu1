@@ -88,8 +88,9 @@ p {
     margin-top: 1rem;
     border-radius: 16px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    height: auto;
+    width: 320px; /* 고정 너비 설정 */
+    height: 240px; /* 고정 높이 설정 */
+    object-fit: cover; /* 이미지가 잘려도 비율 유지하며 꽉 채우기 */
 }
 
 @keyframes fadeInSoft {
