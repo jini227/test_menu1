@@ -85,7 +85,8 @@ p {
 
 #menuImage {
     justify-self: center;
-    margin-top: 1rem;
+    display: block;               /* 인라인 요소 → 블록 요소로 전환 */
+    margin: 1rem auto 0 auto;     /* 자동 중앙 정렬 */
     border-radius: 16px;
     /*box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);*/
     width: 320px; /* 고정 너비 설정 */
