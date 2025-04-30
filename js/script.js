@@ -292,31 +292,47 @@ function showResult() {
 }
 
 function showAnotherMenu() {
+    const loader = document.getElementById('loader');
+    const imageElement = document.getElementById('menuImage');
+    const menuText = document.getElementById('menuResult');
+
+    // 1. 로딩 시작: 텍스트 보여주고 나머지 숨기기
+    loader.style.display = 'block';
+    imageElement.style.display = 'none';
+    menuText.style.display = 'none';
+
     const bestMenu = calculateMenu();
     const category = menuConditions[bestMenu].category;
-    const sameCategoryMenus = Object.keys(menuConditions).filter(menu => menuConditions[menu].category === category && menu !== bestMenu);
+    const sameCategoryMenus = Object.keys(menuConditions).filter(
+        menu => menuConditions[menu].category === category && menu !== bestMenu
+    );
 
-    let randomMenu = sameCategoryMenus[Math.floor(Math.random() * sameCategoryMenus.length)];
-
-    document.getElementById('menuResult').innerText = '🍽️ ' + randomMenu + ' 🍽️';
-
+    const randomMenu = sameCategoryMenus[Math.floor(Math.random() * sameCategoryMenus.length)];
     const imageName = menuImageMap[randomMenu];
-    const imageElement = document.getElementById('menuImage');
-    imageElement.crossOrigin = "anonymous";
     const imageUrl = imageName ? `images/${category}/${imageName}.png` : null;
 
     if (imageUrl) {
         imageElement.onload = function () {
+            // 2. 로딩 완료: 텍스트/이미지 보여주고 로딩 숨김
+            loader.style.display = 'none';
+            imageElement.style.display = 'block';
+            menuText.style.display = 'block';
+            menuText.innerText = '🍽️ ' + randomMenu + ' 🍽️';
+
             getBackgroundColor(imageElement, function (color) {
                 document.getElementById('result').style.backgroundColor = color;
             });
         };
+
         imageElement.src = imageUrl;
-        imageElement.style.display = 'block';
     } else {
+        loader.style.display = 'none';
         imageElement.style.display = 'none';
+        menuText.style.display = 'block';
+        menuText.innerText = randomMenu;
     }
 }
+
 
 function restartTest() {
     currentQuestion = 0;
