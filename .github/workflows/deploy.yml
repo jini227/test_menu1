@@ -1,15 +1,15 @@
-name: Deploy Static Web to EC2
+name: Deploy static site to EC2
 
 on:
   push:
-    branches: [ main ]  # 배포 브랜치
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source
         uses: actions/checkout@v3
 
       - name: Create PEM file
@@ -17,15 +17,18 @@ jobs:
           echo "${{ secrets.EC2_KEY }}" > menumenu.pem
           chmod 600 menumenu.pem
 
-      - name: Upload files to EC2 (~/temp_upload/)
+      - name: Upload all files to EC2 (except .git, .github)
         run: |
-          rsync -avz -e "ssh -i menumenu.pem -o StrictHostKeyChecking=no" ./ ec2-user@${{ secrets.EC2_HOST }}:~/temp_upload/
+          rsync -avz \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            -e "ssh -i menumenu.pem -o StrictHostKeyChecking=no" \
+            ./ ec2-user@${{ secrets.EC2_HOST }}:~/temp_upload/
 
       - name: Move uploaded files to /var/www/html/
         run: |
           ssh -i menumenu.pem -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             sudo rm -rf /var/www/html/*
-            sudo rm -rf ~/temp_upload/*
-            mv ~/temp_upload/* /var/www/html/
+            sudo mv ~/temp_upload/* /var/www/html/
             sudo chown -R ec2-user:ec2-user /var/www/html/
           EOF
