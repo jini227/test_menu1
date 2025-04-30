@@ -111,3 +111,11 @@ p {
     0%, 100% { opacity: 0.3; }
     50% { opacity: 1; }
 }
+
+@media (hover: none) {
+    .button-group button:hover {
+        background-color: inherit !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
