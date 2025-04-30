@@ -114,8 +114,9 @@ p {
 
 @media (hover: none) {
     .button-group button:hover {
-        background-color: inherit !important;
+        background-color: #D7BDE2 !important; /* 원래 버튼 배경색 */
         transform: none !important;
         box-shadow: none !important;
     }
 }
+
